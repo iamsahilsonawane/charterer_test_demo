@@ -16,6 +16,8 @@ class AppThemes {
         trackColor: MaterialStateProperty.all(AppColors.primaryColor),
         thumbColor: MaterialStateProperty.all(Colors.white),
       ),
+      inputDecorationTheme: const InputDecorationTheme(
+          filled: true, fillColor: Color(0xFFE9EEF0)),
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -47,6 +49,8 @@ class AppThemes {
     ),
     AppTheme.darkTheme: ThemeData(
       scaffoldBackgroundColor: Colors.black,
+      inputDecorationTheme: const InputDecorationTheme(
+          filled: true, fillColor: Color(0xFF232323)),
       primarySwatch: Colors.teal,
       switchTheme: SwitchThemeData(
         trackColor: MaterialStateProperty.all(AppColors.primaryColor),

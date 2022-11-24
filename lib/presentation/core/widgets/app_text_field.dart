@@ -26,8 +26,6 @@ class AppTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         suffixIconConstraints:
             const BoxConstraints(minHeight: 30, minWidth: 30),
-        filled: true,
-        fillColor: const Color(0xFFE9EEF0),
         isDense: true,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),

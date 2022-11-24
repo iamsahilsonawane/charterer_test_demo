@@ -63,7 +63,11 @@ class HomePage extends StatelessWidget {
                         top: Radius.circular(20),
                       ),
                     ),
-                    backgroundColor: const Color(0xFFF7F7F7),
+                    backgroundColor:
+                        context.read<ThemeBloc>().state.themeData.brightness ==
+                                Brightness.dark
+                            ? Colors.black.withOpacity(.9)
+                            : const Color(0xFFF7F7F7),
                     builder: (BuildContext context) {
                       return StatefulBuilder(builder: (context, stful) {
                         return SizedBox(
@@ -138,11 +142,18 @@ class ChartererListing extends StatelessWidget {
           Flexible(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: context.read<ThemeBloc>().state.themeData.brightness ==
+                        Brightness.dark
+                    ? const Color(0xFF161618)
+                    : Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Material(
                 clipBehavior: Clip.antiAlias,
+                color: context.read<ThemeBloc>().state.themeData.brightness ==
+                        Brightness.dark
+                    ? const Color(0xFF161618)
+                    : Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -181,9 +192,14 @@ class ChartererListing extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(Icons.error, color: Colors.red),
-                          Text(state.error,
-                              style: textTheme(context).bodyMedium)
+                          const Icon(Icons.error, color: Colors.red, size: 40),
+                          verticalSpaceSmall,
+                          Text(
+                            state.error,
+                            style: textTheme(context)
+                                .bodySmall!
+                                .copyWith(color: AppColors.greyTextColor),
+                          ),
                         ],
                       ),
                     );
