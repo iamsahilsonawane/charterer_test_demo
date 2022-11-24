@@ -85,19 +85,19 @@ class AppThemes {
 
   static const textTheme = TextTheme(
     headlineMedium: TextStyle(
-      fontSize: 32,
+      fontSize: 36,
       fontWeight: FontWeight.w700,
     ),
     titleSmall: TextStyle(
-      fontSize: 16,
+      fontSize: 20,
       fontWeight: FontWeight.w600,
     ),
     bodyMedium: TextStyle(
-      fontSize: 14,
+      fontSize: 18,
       fontWeight: FontWeight.w400,
     ),
     bodySmall: TextStyle(
-      fontSize: 12,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
     ),
   );

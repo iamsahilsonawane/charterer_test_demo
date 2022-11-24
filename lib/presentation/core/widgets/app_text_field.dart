@@ -17,11 +17,11 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
       onChanged: onChanged,
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
-        hintStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+        hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         hintText: hintText,
         suffixIcon: suffixIcon,
         suffixIconConstraints:
@@ -30,7 +30,7 @@ class AppTextField extends StatelessWidget {
         fillColor: const Color(0xFFE9EEF0),
         isDense: true,
         contentPadding:
-            const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide.none,

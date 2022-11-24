@@ -5,7 +5,9 @@ import 'package:charter_flutter/presentation/core/ui_helpers.dart';
 import 'package:charter_flutter/presentation/core/widgets/default_app_padding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../injection_container.dart';
 import '../../bloc/core/theme_event.dart';
 import '../../core/colors.dart';
 import '../../core/widgets/app_text_field.dart';
@@ -51,24 +53,28 @@ class HomePage extends StatelessWidget {
             verticalSpaceRegular,
             ElevatedButton(
               onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+                if (sl.get<SharedPreferences>().get("token") != null) {
+                  showModalBottomSheet<void>(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  backgroundColor: const Color(0xFFF7F7F7),
-                  builder: (BuildContext context) {
-                    return StatefulBuilder(builder: (context, stful) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height * .95,
-                        child: const ChartererListing(),
-                      );
-                    });
-                  },
-                );
+                    backgroundColor: const Color(0xFFF7F7F7),
+                    builder: (BuildContext context) {
+                      return StatefulBuilder(builder: (context, stful) {
+                        return SizedBox(
+                          height: MediaQuery.of(context).size.height * .95,
+                          child: const ChartererListing(),
+                        );
+                      });
+                    },
+                  );
+                } else {
+                  showErrorSnackBar(context, "Please login first");
+                }
               },
               child: const Text("Search"),
             ),
@@ -172,6 +178,7 @@ class ChartererListing extends StatelessWidget {
               ),
             ],
           ),
+          verticalSpaceRegular,
         ],
       ),
     );
