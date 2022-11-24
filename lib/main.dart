@@ -2,9 +2,11 @@ import 'package:charter_flutter/presentation/bloc/core/theme_bloc.dart';
 import 'package:charter_flutter/presentation/bloc/core/theme_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'app_router.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(const MyApp());
 }
@@ -24,6 +26,8 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Charterer',
           theme: themeState.themeData,
+          navigatorKey: AppRouter.navigatorKey,
+          onGenerateRoute: AppRouter.onGenerateRoute,
         );
       }),
     );
