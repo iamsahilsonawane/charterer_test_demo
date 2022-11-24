@@ -18,8 +18,10 @@ class HttpChartererRepository implements ChartererRepository {
       "https://asia-southeast1-marlo-bank-dev.cloudfunctions.net/api_dev/contracts/charterers";
 
   @override
-  Future<void> addCharterer() {
-    throw UnimplementedError();
+  Future<dynamic> addCharterer(dynamic data) async {
+    final Map<String, dynamic> response =
+        await httpSource.post(path, headers: authHeader, data: data);
+    return response;
   }
 
   @override

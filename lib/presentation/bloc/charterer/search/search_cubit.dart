@@ -6,9 +6,9 @@ import 'package:equatable/equatable.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  final ChartererRepository charatererRepository;
+  final ChartererRepository chartererRepository;
 
-  SearchCubit({required this.charatererRepository}) : super(SearchInitial());
+  SearchCubit({required this.chartererRepository}) : super(SearchInitial());
 
   Future<void> search(String query) async {
     try {
@@ -18,7 +18,7 @@ class SearchCubit extends Cubit<SearchState> {
         return;
       }
       List<String> charaterers =
-          await charatererRepository.searchCharterers(query);
+          await chartererRepository.searchCharterers(query);
       emit(SearchData(results: charaterers));
     } catch (e) {
       if (e is HttpException) {

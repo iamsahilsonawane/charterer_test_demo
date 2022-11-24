@@ -6,7 +6,7 @@ class AppTextField extends StatelessWidget {
     this.suffixIcon,
     this.hintText,
     this.onChanged,
-    this.onSubmitted,
+    this.validator,
     this.isDensePadding = false,
     this.controller,
   }) : super(key: key);
@@ -14,17 +14,17 @@ class AppTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String? hintText;
   final void Function(String)? onChanged;
-  final void Function(String)? onSubmitted;
+  final String? Function(String?)? validator;
   final bool isDensePadding;
   final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
       controller: controller,
       onChanged: onChanged,
-      onSubmitted: onSubmitted,
+      validator: validator,
       decoration: InputDecoration(
         hintStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
         hintText: hintText,

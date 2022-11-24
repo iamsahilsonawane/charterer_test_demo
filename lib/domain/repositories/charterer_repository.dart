@@ -4,5 +4,5 @@ abstract class ChartererRepository {
   Map<String, String> get authHeader;
 
   Future<List<String>> searchCharterers(String query);
-  Future<void> addCharterer();
+  Future<dynamic> addCharterer(dynamic data);
 }

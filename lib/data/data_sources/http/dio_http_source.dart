@@ -34,6 +34,9 @@ class DioHttpService implements HttpSource {
     try {
       return await function();
     } on DioError catch (e) {
+      if (e.response?.statusCode == 201) {
+        return;
+      }
       if (e.type == DioErrorType.connectTimeout) {
         throw HttpException(
           title: "Connection Timeout Exception",
@@ -63,6 +66,8 @@ class DioHttpService implements HttpSource {
             if (responseData["error"]["error_flag"] != "SUCCESS") {
               errorMessage = responseData["error"]["message"];
             }
+          } else if ((responseData["error"].containsKey("message") ?? false)) {
+            errorMessage = responseData["error"]["message"];
           }
         }
 
@@ -114,7 +119,8 @@ class DioHttpService implements HttpSource {
         data: data,
         options: Options(headers: headers),
       );
-      if (response.data == null || response.statusCode != 200) {
+      if (response.data == null ||
+          !(response.statusCode! >= 200 && response.statusCode! < 300)) {
         throw HttpException(
           title: 'Http Error!',
           statusCode: response.statusCode,
