@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../bloc/core/theme_event.dart';
 import '../../core/colors.dart';
+import '../../core/widgets/app_text_field.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -44,7 +45,26 @@ class HomePage extends StatelessWidget {
             ),
             verticalSpaceRegular,
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showModalBottomSheet<void>(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  backgroundColor: const Color(0xFFF7F7F7),
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(builder: (context, stful) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height * .95,
+                        child: const ChartererListing(),
+                      );
+                    });
+                  },
+                );
+              },
               child: const Text("Search"),
             ),
             verticalSpaceMedium,
@@ -63,6 +83,91 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class ChartererListing extends StatelessWidget {
+  const ChartererListing({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultAppPadding(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Center(
+            child: Container(
+              height: 5,
+              width: MediaQuery.of(context).size.width * .2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: const Color(0xFFC6EBF6),
+              ),
+            ),
+          ),
+          verticalSpaceRegular,
+          Text(
+            "Charterer",
+            style: textTheme(context).titleSmall,
+          ),
+          verticalSpaceRegular,
+          const AppTextField(
+            hintText: "Search",
+            suffixIcon: Icon(Icons.search, color: AppColors.greyIconColor),
+          ),
+          verticalSpaceRegular,
+          Flexible(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Material(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: ListView.builder(
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () {},
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 2),
+                      title: Text("Charterer 1",
+                          style: textTheme(context).bodyMedium),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          verticalSpaceRegular,
+          Row(
+            children: [
+              Flexible(
+                child: Text(
+                  "Can't find your Charterer? ",
+                  style: textTheme(context)
+                      .bodySmall!
+                      .copyWith(color: AppColors.greyTextColor),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Text(
+                  "Add now",
+                  style: textTheme(context)
+                      .bodySmall!
+                      .copyWith(color: AppColors.primaryColor),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

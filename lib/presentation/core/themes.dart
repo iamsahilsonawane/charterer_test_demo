@@ -40,6 +40,9 @@ class AppThemes {
       ),
       textTheme: TextTheme(
         headlineMedium: textTheme.headlineMedium!.copyWith(color: Colors.black),
+        titleSmall: textTheme.titleSmall!.copyWith(color: Colors.black),
+        bodyMedium: textTheme.bodyMedium!.copyWith(color: Colors.black),
+        bodySmall: textTheme.bodySmall!.copyWith(color: Colors.black),
       ),
     ),
     AppTheme.darkTheme: ThemeData(
@@ -73,6 +76,9 @@ class AppThemes {
       ),
       textTheme: TextTheme(
         headlineMedium: textTheme.headlineMedium!.copyWith(color: Colors.white),
+        titleSmall: textTheme.titleSmall!.copyWith(color: Colors.white),
+        bodyMedium: textTheme.bodyMedium!.copyWith(color: Colors.white),
+        bodySmall: textTheme.bodySmall!.copyWith(color: Colors.white),
       ),
     )
   };
@@ -81,6 +87,18 @@ class AppThemes {
     headlineMedium: TextStyle(
       fontSize: 32,
       fontWeight: FontWeight.w700,
+    ),
+    titleSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+    ),
+    bodySmall: TextStyle(
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
     ),
   );
 }
