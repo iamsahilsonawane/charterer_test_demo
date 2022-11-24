@@ -1,3 +1,4 @@
+import 'package:charter_flutter/presentation/bloc/auth/auth_cubit.dart';
 import 'package:charter_flutter/presentation/bloc/core/theme_bloc.dart';
 import 'package:charter_flutter/presentation/core/themes.dart';
 import 'package:charter_flutter/presentation/core/ui_helpers.dart';
@@ -40,7 +41,11 @@ class HomePage extends StatelessWidget {
             ),
             verticalSpaceRegular,
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.read<AuthCubit>().login().onError((error, stackTrace) {
+                  showErrorSnackBar(context, error);
+                });
+              },
               child: const Text("Login"),
             ),
             verticalSpaceRegular,

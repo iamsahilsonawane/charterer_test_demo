@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/exceptions/http_exception.dart';
+
 const Widget horizontalSpaceTiny = SizedBox(width: 4.0);
 const Widget horizontalSpaceSmall = SizedBox(width: 8.0);
 const Widget horizontalSpaceRegular = SizedBox(width: 16.0);
@@ -56,3 +58,14 @@ void showSnackBar(
 //     showSnackBar(context, message: "Something went wrong");
 //   }
 // }
+
+void showErrorSnackBar(BuildContext? context, Object? error) {
+  if (error is String) {
+    showSnackBar(context, message: error.toString());
+  } else if (error is HttpException) {
+    showSnackBar(context,
+        message: error.message ?? error.title ?? "Something went wrong");
+  } else {
+    showSnackBar(context, message: "Something went wrong");
+  }
+}
