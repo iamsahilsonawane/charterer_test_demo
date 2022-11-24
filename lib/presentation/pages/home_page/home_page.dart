@@ -29,78 +29,92 @@ class HomePage extends StatelessWidget {
         extendedTextStyle: const TextStyle(letterSpacing: 0),
         backgroundColor: AppColors.primaryColor,
       ),
-      body: DefaultAppPadding(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text.rich(
-              TextSpan(text: "Welcome to the\n", children: [
-                TextSpan(
-                  text: "Charterer",
-                  style: textTheme(context).headlineMedium!,
-                )
-              ]),
-              style: textTheme(context).headlineMedium!.copyWith(
-                  color: Colors.grey[600], fontWeight: FontWeight.normal),
-              textAlign: TextAlign.center,
-            ),
-            verticalSpaceRegular,
-            ElevatedButton(
-              onPressed: () {
-                context.read<AuthCubit>().login().onError((error, stackTrace) {
-                  showErrorSnackBar(context, error);
-                });
-              },
-              child: const Text("Login"),
-            ),
-            verticalSpaceRegular,
-            ElevatedButton(
-              onPressed: () {
-                if (sl.get<SharedPreferences>().get("token") != null) {
-                  showModalBottomSheet<void>(
-                    context: context,
-                    isScrollControlled: true,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
+      body: BlocListener<AuthCubit, AuthState>(
+        listenWhen: (previous, current) => current is Authenticated,
+        listener: (context, state) {
+          if (state is Authenticated) {
+            showSnackBar(context, message: "Logged in successfully");
+          }
+        },
+        child: DefaultAppPadding(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text.rich(
+                TextSpan(text: "Welcome to the\n", children: [
+                  TextSpan(
+                    text: "Charterer",
+                    style: textTheme(context).headlineMedium!,
+                  )
+                ]),
+                style: textTheme(context).headlineMedium!.copyWith(
+                    color: Colors.grey[600], fontWeight: FontWeight.normal),
+                textAlign: TextAlign.center,
+              ),
+              verticalSpaceRegular,
+              ElevatedButton(
+                onPressed: () {
+                  context
+                      .read<AuthCubit>()
+                      .login()
+                      .onError((error, stackTrace) {
+                    showErrorSnackBar(context, error);
+                  });
+                },
+                child: const Text("Login"),
+              ),
+              verticalSpaceRegular,
+              ElevatedButton(
+                onPressed: () {
+                  if (sl.get<SharedPreferences>().get("token") != null) {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    backgroundColor:
-                        context.read<ThemeBloc>().state.themeData.brightness ==
-                                Brightness.dark
-                            ? Colors.black.withOpacity(.9)
-                            : const Color(0xFFF7F7F7),
-                    builder: (BuildContext context) {
-                      return StatefulBuilder(builder: (context, stful) {
-                        return SizedBox(
-                          height: MediaQuery.of(context).size.height * .95,
-                          child: const ChartererListing(),
-                        );
-                      });
-                    },
-                  );
-                } else {
-                  showErrorSnackBar(context, "Please login first");
-                }
-              },
-              child: const Text("Search"),
-            ),
-            verticalSpaceMedium,
-            SwitchListTile(
-              title: const Text("Dark Mode"),
-              value: context.watch<ThemeBloc>().state.themeData.brightness ==
-                  Brightness.dark,
-              onChanged: (switchToDark) {
-                final selectedTheme =
-                    switchToDark ? AppTheme.darkTheme : AppTheme.lightTheme;
+                      backgroundColor: context
+                                  .read<ThemeBloc>()
+                                  .state
+                                  .themeData
+                                  .brightness ==
+                              Brightness.dark
+                          ? Colors.black.withOpacity(.9)
+                          : const Color(0xFFF7F7F7),
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(builder: (context, stful) {
+                          return SizedBox(
+                            height: MediaQuery.of(context).size.height * .95,
+                            child: const ChartererListing(),
+                          );
+                        });
+                      },
+                    );
+                  } else {
+                    showErrorSnackBar(context, "Please login first");
+                  }
+                },
+                child: const Text("Search"),
+              ),
+              verticalSpaceMedium,
+              SwitchListTile(
+                title: const Text("Dark Mode"),
+                value: context.watch<ThemeBloc>().state.themeData.brightness ==
+                    Brightness.dark,
+                onChanged: (switchToDark) {
+                  final selectedTheme =
+                      switchToDark ? AppTheme.darkTheme : AppTheme.lightTheme;
 
-                context
-                    .read<ThemeBloc>()
-                    .add(ThemeEvent(appTheme: selectedTheme));
-              },
-            ),
-          ],
+                  context
+                      .read<ThemeBloc>()
+                      .add(ThemeEvent(appTheme: selectedTheme));
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
