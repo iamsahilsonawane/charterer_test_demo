@@ -54,7 +54,7 @@ class DioHttpService implements HttpSource {
 
         if ((responseData?.containsKey("error_flag") ?? false)) {
           if (responseData!["error_flag"] != "SUCCESS") {
-            errorMessage = responseData["error_flag"];
+            errorMessage = responseData["message"];
           }
         }
 

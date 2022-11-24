@@ -1,8 +1,8 @@
-abstract class AuthRepository {
+abstract class ChartererRepository {
   String get path;
 
   Map<String, String> get authHeader;
 
-  Future<String> searchCharterers();
-  Future<String> addCharterer();
+  Future<List<String>> searchCharterers(String query);
+  Future<void> addCharterer();
 }

@@ -1,4 +1,5 @@
 import 'package:charter_flutter/presentation/bloc/auth/auth_cubit.dart';
+import 'package:charter_flutter/presentation/bloc/charterer/search/search_cubit.dart';
 import 'package:charter_flutter/presentation/bloc/core/theme_bloc.dart';
 import 'package:charter_flutter/presentation/core/themes.dart';
 import 'package:charter_flutter/presentation/core/ui_helpers.dart';
@@ -125,9 +126,13 @@ class ChartererListing extends StatelessWidget {
             style: textTheme(context).titleSmall,
           ),
           verticalSpaceRegular,
-          const AppTextField(
+          AppTextField(
             hintText: "Search",
-            suffixIcon: Icon(Icons.search, color: AppColors.greyIconColor),
+            suffixIcon:
+                const Icon(Icons.search, color: AppColors.greyIconColor),
+            onChanged: (query) {
+              context.read<SearchCubit>().search(query);
+            },
           ),
           verticalSpaceRegular,
           Flexible(
@@ -141,18 +146,53 @@ class ChartererListing extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      onTap: () {},
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 2),
-                      title: Text("Charterer 1",
-                          style: textTheme(context).bodyMedium),
+                child: BlocBuilder<SearchCubit, SearchState>(
+                    builder: (context, state) {
+                  if (state is SearchInitial) {
+                    return const Center(
+                      child: Text("Search Charterer"),
                     );
-                  },
-                ),
+                  } else if (state is SearchLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is SearchData) {
+                    final results = state.results;
+                    if (results.isEmpty) {
+                      return const Center(
+                        child: Text("Search Charterer"),
+                      );
+                    }
+                    return ListView.builder(
+                      itemCount: results.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          onTap: () {},
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 2),
+                          title: Text(results[index],
+                              style: textTheme(context).bodyMedium),
+                        );
+                      },
+                    );
+                  } else if (state is SearchError) {
+                    return Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.error, color: Colors.red),
+                          Text(state.error,
+                              style: textTheme(context).bodyMedium)
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text("Search Charterer"),
+                    );
+                  }
+                }),
               ),
             ),
           ),
