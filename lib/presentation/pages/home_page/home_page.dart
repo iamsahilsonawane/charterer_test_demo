@@ -1,3 +1,4 @@
+import 'package:charter_flutter/app_router.dart';
 import 'package:charter_flutter/presentation/bloc/auth/auth_cubit.dart';
 import 'package:charter_flutter/presentation/bloc/charterer/search/search_cubit.dart';
 import 'package:charter_flutter/presentation/bloc/core/theme_bloc.dart';
@@ -20,7 +21,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          AppRouter.navigateToPage(Routes.createCharterer);
+        },
         label: const Text('Add Charterer'),
         icon: const Icon(Icons.add),
         extendedTextStyle: const TextStyle(letterSpacing: 0),

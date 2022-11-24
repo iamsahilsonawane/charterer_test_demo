@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:charter_flutter/presentation/pages/charterer/add_charterer_page.dart';
 import 'package:charter_flutter/presentation/pages/home_page/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +55,12 @@ class AppRouter {
           fullscreenDialog: false,
         );
 
+      case Routes.createCharterer:
+        return MaterialPageRoute<dynamic>(
+          builder: (_) => const AddChartererPage(),
+          settings: settings,
+          fullscreenDialog: false,
+        );
       default:
         return null;
     }
